@@ -24,7 +24,7 @@ export default {
         console.log(this.selectedFiles[i])
         fd.append("images[]",this.selectedFiles[i],this.selectedFiles[i].name)
       }
-      axios.post("http://localhost:5000/uploadImg",fd, {headers: {
+      axios.post("/uploadImg",fd, {headers: {
     'accept': 'application/json',
     'Accept-Language': 'en-US,en;q=0.8',
     'Content-Type': `multipart/form-data; boundary=${fd._boundary}`
