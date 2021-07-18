@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <input type="file" name="image" @change="onFileSelected" id="upload" multiple>
+    <input type="file" name="image" @change="onFileSelected" id="upload" multiple> <!-- webkitdirectory mozdirectory (folder) -->
     <button @click="onUpload">Upload</button>
   </div>
 </template>
