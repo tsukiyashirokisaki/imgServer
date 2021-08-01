@@ -50,5 +50,8 @@ def uploadImg():
         jpg.save(root+"images/val/"+jpg.filename)
         txt.save(root+"labels/val/"+txt.filename)
     return jsonify({"result":"ok"})
+@app.route('/test')
+def test():
+    return jsonify({"status":"ok"})
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
