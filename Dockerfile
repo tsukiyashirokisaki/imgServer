@@ -14,6 +14,6 @@ RUN pip3 install flask
 RUN pip3 install Flask-Cors
 RUN pip3 install Flask-PyMongo
 RUN pip3 install sklearn
-CMD nohup python imgServer/backend.py
+CMD python imgServer/backend.py
 
 
