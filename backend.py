@@ -1,19 +1,26 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 import datetime
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 import json
 import os
 from sklearn.model_selection import train_test_split
-
+from utils import Colors,plot_one_box,sampleName,readLabels,xywhn2xyxy
+import cv2
+from PIL import Image
+import io
+import yaml
 app = Flask(__name__)
 CORS(app)
-root = "./upload/"
+root = "./upload/"    
 test_size = 0.1
+sampleNum = 5
+colors = Colors()
+with open(root+"coco128.yaml") as f:
+    id2name = yaml.safe_load(f)["names"]  
 @app.route('/uploadImg', methods=["POST"])
 def uploadImg():
     flist = request.files.getlist("images[]")
-    
     folderName = ["images","labels"]
     types = ["train","val"]
     for folder in folderName:
@@ -50,6 +57,31 @@ def uploadImg():
         jpg.save(root+"images/val/"+jpg.filename)
         txt.save(root+"labels/val/"+txt.filename)
     return jsonify({"result":"ok"})
+@app.route('/addBox')
+def addBox():
+    types = ["train","val"]
+    names = dict()
+    for t in types:
+        names[t]=sampleName(root+"images/"+t,"addBox",sampleNum)
+    return {"boxList":names}
+@app.route('/addBox/<path:path>')
+def sendData(path):
+    img = cv2.imread(path)
+    cs,xywhns = readLabels(path.replace("/images/","/labels/").replace(".jpg",".txt"))
+    xyxys = xywhn2xyxy(xywhns,img.shape[1],img.shape[0])
+    for c,xyxy in zip(cs,xyxys):
+        plot_one_box(xyxy,img,label=id2name[c],color=colors(c, True))
+    file_object = io.BytesIO()
+    Image.fromarray(img[:,:,::-1]).save(file_object, 'PNG')
+    file_object.seek(0)
+    return send_file(file_object, mimetype='image/PNG')
+            
+    return {"status":"ok"}
+
+
+
+    
+
 @app.route('/test')
 def test():
     return jsonify({"status":"ok"})

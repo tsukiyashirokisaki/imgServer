@@ -1,6 +1,5 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
     <input type="file" name="image" @change="onFileSelected" id="upload" multiple> <!-- webkitdirectory mozdirectory (folder) -->
     <button @click="onUpload">Upload</button>
   </div>
@@ -9,10 +8,8 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
+  name: 'UploadImg',
+  
   methods: {
     onFileSelected(event){
       this.selectedFiles = event.target.files
@@ -50,7 +47,7 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
-}
+} 
 a {
   color: #42b983;
 }

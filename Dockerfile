@@ -11,6 +11,9 @@ RUN apt-get install git -y
 RUN apt-get install python3-pip -y
 RUN git clone https://github.com/tsukiyashirokisaki/imgServer
 RUN pip3 install flask
+RUN pip3 install opencv-python
+RUN pip3 install Pillow
+RUN pip3 install numpy
 RUN pip3 install Flask-Cors
 RUN pip3 install Flask-PyMongo
 RUN pip3 install sklearn
