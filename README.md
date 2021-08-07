@@ -1,8 +1,7 @@
 # imgServer
 ## backend
-1. make folder upload/ under the root folder
-2. put coco128.yaml in the upload folder
-3. use UploadImg.vue component to upload imgs
+1. change coco128.yaml in upload/
+2. use UploadImg.vue component to upload imgs
 ```
 pip3 install flask
 pip3 install Flask-Cors
