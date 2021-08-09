@@ -65,7 +65,7 @@ def addBox():
         names[t]=sampleName(root+"images/"+t,"addBox",sampleNum)
     return {"boxList":names}
 @app.route('/addBox/<path:path>')
-def sendData(path):
+def sendAddBox(path):
     img = cv2.imread(path)
     cs,xywhns = readLabels(path.replace("/images/","/labels/").replace(".jpg",".txt"))
     xyxys = xywhn2xyxy(xywhns,img.shape[1],img.shape[0])
