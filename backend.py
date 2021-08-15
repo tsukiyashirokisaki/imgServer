@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, send_file
+from flask import Flask, jsonify, request, send_file, send_from_directory
 import datetime
 from flask_pymongo import PyMongo
 from flask_cors import CORS
@@ -75,8 +75,10 @@ def sendAddBox(path):
     Image.fromarray(img[:,:,::-1]).save(file_object, 'PNG')
     file_object.seek(0)
     return send_file(file_object, mimetype='image/PNG')
-            
-    return {"status":"ok"}
+    
+@app.route('/file/<path:path>')
+def sendData(path):
+    return send_from_directory("model/",path)
 
 
 

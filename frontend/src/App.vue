@@ -2,17 +2,20 @@
   <div id="app">
     <UploadImg/>
     <ViewImg/>
+    <Download/>
   </div>
 </template>
 <script>
 import ViewImg from './components/ViewImg.vue'
 import UploadImg from './components/UploadImg.vue'
+import Download from './components/Download.vue'
 
 export default {
   name: 'App',
   components: {
     UploadImg,
-    ViewImg
+    ViewImg,
+    Download
   }
 }
 </script>
