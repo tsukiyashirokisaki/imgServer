@@ -92,7 +92,7 @@ result = model.fit(train_generator,
 epochs=EPOCH,steps_per_epoch=math.ceil(len(imgTrain)/BATCH_SIZE),
  verbose=1, validation_data=val_generator,
 validation_steps=math.ceil(len(imgVal)/BATCH_SIZE))
-model.save("model.h5")
+model.save("mlruns/model.h5")
 
 
 
