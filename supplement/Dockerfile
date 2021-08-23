@@ -10,5 +10,5 @@ RUN pip install sklearn
 RUN pip install mlflow
 RUN git clone https://github.com/tsukiyashirokisaki/imgServer
 RUN cp imgServer/supplement/classify.py .
-CMD python classify.py --imgsz 224 --num_classes 1000 --lr 0.001 --val_frac 0.1 --optimizer Adam --model_name ResNet50 --batch_size 32 --epoch 10 --label_path mlruns/label.txt --img_path mlruns/images/
+CMD python classify.py --imgsz 224 --num_classes 1000 --lr 0.001 --val_frac 0.1 --optimizer Adam --model_name ResNet50 --batch_size 32 --epoch 10 --label_path data/label.txt --img_path data/images/
 
