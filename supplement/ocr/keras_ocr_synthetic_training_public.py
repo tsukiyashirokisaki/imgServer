@@ -234,7 +234,7 @@ recognizer.training_model.fit_generator(
 # In[ ]:
 
 
-pipeline = keras_ocr.pipelines.Pipeline(detector=detector, recognizer=recognizer)
+pipeline = keras_ocr.pipeline.Pipeline(detector=detector, recognizer=recognizer)
 image, lines = next(image_generators[0])
 predictions = pipeline.recognize(images=[image])[0]
 drawn = keras_ocr.tools.drawBoxes(
