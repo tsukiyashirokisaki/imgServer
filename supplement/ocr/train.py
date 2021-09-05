@@ -1,36 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # Training a custom OCR pipeline with keras-ocr
-# 
-# This is an interactive version of the example documented [here](https://keras-ocr.readthedocs.io/en/latest/examples/end_to_end_training.html).
-# 
-# You may wish to train your own end-to-end OCR pipeline. Here's an example for
-# how you might do it. Note that the image generator has many options not
-# documented here (such as adding backgrounds and image augmentation). Check
-# the documentation for the `keras_ocr.tools.get_image_generator` function for more details.
-# 
-# Please note that, right now, we use a very simple training mechanism for the
-# text detector which seems to work but does not match the method used in the
-# original implementation.
-
-# You can mount your Google Drive here if you want -- if not, just change the paths below to remove the `'drive/My Drive'` prefix.
-
-# In[2]:
-
-
-try:
-  from google.colab import drive
-  import os
-  drive.mount('/content/drive')
-  data_dir = 'drive/My Drive/colab/keras-ocr'
-  os.makedirs(data_dir, exist_ok=True)
-except ImportError:
-  data_dir = '.'
-
-
-# In[3]:
-
 
 import zipfile
 import datetime
@@ -62,7 +29,8 @@ import keras_ocr
 # In[4]:
 
 
-alphabet = string.digits + string.ascii_letters + '!?. '
+# alphabet = string.digits + string.ascii_letters + '!?. '
+alphabet = '0123456789abcdefghijklmnopqrstuvwxyz'
 recognizer_alphabet = ''.join(sorted(set(alphabet.lower())))
 fonts = keras_ocr.data_generation.get_fonts(
     alphabet=alphabet,
@@ -158,10 +126,12 @@ detection_train_generator, detection_val_generator, detection_test_generator = [
         batch_size=detector_batch_size
     ) for image_generator in image_generators
 ]
+# fine tune
+detector.model.compile(loss="mse", optimizer=tf.optimizers.Adam(learning_rate=1e-5))
 detector.model.fit(
     detection_train_generator,
     steps_per_epoch=math.ceil(len(background_splits[0]) / detector_batch_size),
-    epochs=5,
+    epochs=1,
     workers=0,
     callbacks=[
         tf.keras.callbacks.EarlyStopping(restore_best_weights=True, patience=5),
@@ -214,9 +184,10 @@ recognition_train_generator, recognition_val_generator, recogntion_test_generato
       lowercase=True
     ) for image_generator in recognition_image_generators
 ]
+recognizer.training_model.compile(loss=lambda _, y_pred: y_pred,optimizer=tf.optimizers.RMSprop(learning_rate=1e-5))
 recognizer.training_model.fit(
     recognition_train_generator,
-    epochs=1000,
+    epochs=1,
     steps_per_epoch=math.ceil(len(background_splits[0]) / recognition_batch_size),
     callbacks=[
       tf.keras.callbacks.EarlyStopping(restore_best_weights=True, patience=25),
@@ -246,10 +217,9 @@ print(
 plt.imshow(drawn)
 
 
-# In[ ]:
+if not os.path.exists("test_image.jpg"):
+    os.system("curl https://raw.githubusercontent.com/faustomorales/keras-ocr/master/tests/test_image.jpg --output test_image.jpg")
 
-
-# !curl https://raw.githubusercontent.com/faustomorales/keras-ocr/master/tests/test_image.jpg --output test_image.jpg
 image = keras_ocr.tools.read('test_image.jpg')
 boxes = detector.detect(images=[image])[0]
 drawn = keras_ocr.detection.drawBoxes(image=image, boxes=boxes)
