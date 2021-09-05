@@ -158,8 +158,8 @@ detection_train_generator, detection_val_generator, detection_test_generator = [
         batch_size=detector_batch_size
     ) for image_generator in image_generators
 ]
-detector.model.fit_generator(
-    generator=detection_train_generator,
+detector.model.fit(
+    detection_train_generator,
     steps_per_epoch=math.ceil(len(background_splits[0]) / detector_batch_size),
     epochs=5,
     workers=0,
@@ -214,8 +214,8 @@ recognition_train_generator, recognition_val_generator, recogntion_test_generato
       lowercase=True
     ) for image_generator in recognition_image_generators
 ]
-recognizer.training_model.fit_generator(
-    generator=recognition_train_generator,
+recognizer.training_model.fit(
+    recognition_train_generator,
     epochs=1000,
     steps_per_epoch=math.ceil(len(background_splits[0]) / recognition_batch_size),
     callbacks=[
