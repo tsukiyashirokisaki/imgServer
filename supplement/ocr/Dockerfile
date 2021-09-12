@@ -8,3 +8,4 @@ RUN pip install numpy
 RUN pip install sklearn
 RUN pip install mlflow
 RUN pip install keras-ocr
+RUN pip install pandas
