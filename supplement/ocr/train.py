@@ -25,9 +25,6 @@ def parse_opt():
     parser.add_argument('--detector_epoch',type=int,default=1, help="detector_epoch")
     parser.add_argument('--detector_learning_rate',type=float,default=1e-5,help="detector_learning_rate")
     parser.add_argument('--recognizer_learning_rate',type=float,default=1e-5,help='recognizer_learning_rate')
-    parser.add_argument('--epoch',type=int,default=10,help='epoch')
-    parser.add_argument('--label_path',type=str,default='data/label.txt',help='label path')
-    parser.add_argument('--img_path',type=str,default='data/images/',help='images path')
     opt = parser.parse_args()
     return opt
 opt = parse_opt()
@@ -42,6 +39,8 @@ recognizer_alphabet = ''.join(sorted(set(alphabet.lower())))
 label_dir = "label/"
 image_dir = "image/"
 output_dir = "output/"
+if not os.path.isdir(output_dir):
+    os.makedirs(output_dir)
 def get_train_val_test_split(arr):
     train, valtest = sklearn.model_selection.train_test_split(arr, train_size=0.8, random_state=42)
     val, test = sklearn.model_selection.train_test_split(valtest, train_size=0.5, random_state=42)
@@ -128,9 +127,9 @@ recognizer.training_model.compile(loss=lambda _, y_pred: y_pred,optimizer=tf.opt
 recognizer.training_model.fit(
     recognition_train_generator,
     epochs=recognizer_epoch,
-    steps_per_epoch=math.ceil(lens[0] / recognition_batch_size),
+    steps_per_epoch=math.ceil(lens[0] / recognizer_batch_size),
     validation_data=recognition_val_generator,
-    validation_steps=math.ceil(lens[1]/ recognition_batch_size),
+    validation_steps=math.ceil(lens[1]/ recognizer_batch_size),
     workers=0,
     callbacks=[
       tf.keras.callbacks.EarlyStopping(restore_best_weights=True, patience=25),
