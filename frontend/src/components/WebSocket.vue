@@ -2,7 +2,7 @@
     <div>
         <h1>Log</h1>
   
-        <p v-html="log"></p>
+        <p v-html="log.replace(/(?:\r\n|\r|\n)/g, '<br />')"></p>
     </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
   },
   mounted () {
   this.sockets.subscribe('log', (event) => {
-    this.log = event.data.replace(/(\\r)*\\n/g, '<br>');
+    this.log = event.data;
   });
 }
   

@@ -101,7 +101,8 @@ def sendLog():
         mtime = datetime.datetime.fromtimestamp(fname.stat().st_mtime)
         if mtime != prevMtime:
             f = open(logPath,"r",encoding="utf-8")
-            socketio.emit('log', {'data': f.read().replace("\n","<br>")})
+            # socketio.emit('log', {'data': f.read().replace("\n","<br>")})
+            socketio.emit('log', {'data': f.read()})
             f.close()
         socketio.sleep(1)
         prevMtime = mtime
