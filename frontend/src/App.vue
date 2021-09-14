@@ -3,20 +3,25 @@
     <UploadImg/>
     <ViewImg/>
     <Download/>
+    <WebSocket/>
   </div>
 </template>
 <script>
 import ViewImg from './components/ViewImg.vue'
 import UploadImg from './components/UploadImg.vue'
 import Download from './components/Download.vue'
+import WebSocket from './components/WebSocket.vue'
 
 export default {
   name: 'App',
   components: {
     UploadImg,
     ViewImg,
-    Download
-  }
+    Download,
+    WebSocket
+  },
+  
+
 }
 </script>
 

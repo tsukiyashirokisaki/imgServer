@@ -10,6 +10,9 @@ pip3 install sklearn
 pip3 install opencv-python
 pip3 install Pillow
 pip3 install numpy
+pip3 install python-engineio==4.2.1
+pip3 install Flask-SocketIO==5.1.1
+pip3 install python-socketio==5.0.3
 python backend.py
 ```
 ## frontend

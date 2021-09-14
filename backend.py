@@ -10,12 +10,19 @@ import cv2
 from PIL import Image
 import io
 import yaml
+from flask_socketio import SocketIO
+from threading import Lock
+import pathlib
 app = Flask(__name__)
 CORS(app)
 root = "./upload/"    
 test_size = 0.1
 sampleNum = 5
 colors = Colors()
+socketio = SocketIO(app,cors_allowed_origins='http://localhost:8080' ,async_mode='gevent',engineio_logger=True, logger=True)
+thread = None
+thread_lock = Lock()
+
 with open(root+"coco128.yaml") as f:
     id2name = yaml.safe_load(f)["names"]  
 @app.route('/uploadImg', methods=["POST"])
@@ -79,13 +86,32 @@ def sendAddBox(path):
 @app.route('/file/<path:path>')
 def sendData(path):
     return send_from_directory("model/",path)
-
-
+@socketio.on('log')
+def initLog(msg):
+    global thread
+    with thread_lock:
+        if thread is None:
+            thread = socketio.start_background_task(sendLog)
+    
+def sendLog():
+    prevMtime = None
+    logPath = "train.log"
+    fname = pathlib.Path(logPath)
+    while True:    
+        mtime = datetime.datetime.fromtimestamp(fname.stat().st_mtime)
+        if mtime != prevMtime:
+            f = open(logPath,"r",encoding="utf-8")
+            socketio.emit('log', {'data': f.read().replace("\n","<br>")})
+            f.close()
+        socketio.sleep(1)
+        prevMtime = mtime
+    
+        
 
     
 
-@app.route('/test')
-def test():
-    return jsonify({"status":"ok"})
+# @app.route('/test')
+# def test():
+#     return jsonify({"status":"ok"})
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    socketio.run(app=app,host="0.0.0.0", debug=False)

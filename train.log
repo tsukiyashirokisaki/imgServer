@@ -1,0 +1,106 @@
+ * Serving Flask app "yolov5backend" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:9036/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 231-985-229
+[2021-09-13 02:07:30,684] INFO in yolov5backend: start training model
+Using torch 1.9.0+cu102 CUDA:0 (Tesla V100-PCIE-32GB, 32510MB)
+                        CUDA:1 (Tesla T4, 15109MB)
+
+Namespace(adam=False, batch_size=16, bucket='', cache_images=False, cfg='models/yolov5s.yaml', data='data/data.yaml', device='', epochs=4, evolve=False, exist_ok=False, global_rank=-1, hyp='data/hyp.scratch.yaml', id='613eb256de29902c7038f00e', image_weights=False, img_size=[640, 640], local_rank=-1, log_imgs=16, multi_scale=False, name='model', noautoanchor=False, nosave=False, notest=False, project='runs/train', rect=False, resume=False, save_dir='runs/train/model', single_cls=False, sync_bn=False, total_batch_size=16, username='qct', weights='', workers=8, world_size=1)
+Start Tensorboard with "tensorboard --logdir runs/train", view at http://localhost:6006/
+Hyperparameters {'lr0': 0.01, 'lrf': 0.2, 'momentum': 0.937, 'weight_decay': 0.0005, 'warmup_epochs': 3.0, 'warmup_momentum': 0.8, 'warmup_bias_lr': 0.1, 'box': 0.05, 'cls': 0.5, 'cls_pw': 1.0, 'obj': 1.0, 'obj_pw': 1.0, 'iou_t': 0.2, 'anchor_t': 4.0, 'fl_gamma': 0.0, 'hsv_h': 0.015, 'hsv_s': 0.7, 'hsv_v': 0.4, 'degrees': 0.0, 'translate': 0.1, 'scale': 0.5, 'shear': 0.0, 'perspective': 0.0, 'flipud': 0.0, 'fliplr': 0.5, 'mosaic': 1.0, 'mixup': 0.0}
+Overriding model.yaml nc=80 with nc=1
+
+                 from  n    params  module                                  arguments                     
+  0                -1  1      3520  models.common.Focus                     [3, 32, 3]                    
+  1                -1  1     18560  models.common.Conv                      [32, 64, 3, 2]                
+  2                -1  1     19904  models.common.BottleneckCSP             [64, 64, 1]                   
+  3                -1  1     73984  models.common.Conv                      [64, 128, 3, 2]               
+  4                -1  1    161152  models.common.BottleneckCSP             [128, 128, 3]                 
+  5                -1  1    295424  models.common.Conv                      [128, 256, 3, 2]              
+  6                -1  1    641792  models.common.BottleneckCSP             [256, 256, 3]                 
+  7                -1  1   1180672  models.common.Conv                      [256, 512, 3, 2]              
+  8                -1  1    656896  models.common.SPP                       [512, 512, [5, 9, 13]]        
+  9                -1  1   1248768  models.common.BottleneckCSP             [512, 512, 1, False]          
+ 10                -1  1    131584  models.common.Conv                      [512, 256, 1, 1]              
+ 11                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, 'nearest']          
+ 12           [-1, 6]  1         0  models.common.Concat                    [1]                           
+ 13                -1  1    378624  models.common.BottleneckCSP             [512, 256, 1, False]          
+ 14                -1  1     33024  models.common.Conv                      [256, 128, 1, 1]              
+ 15                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, 'nearest']          
+ 16           [-1, 4]  1         0  models.common.Concat                    [1]                           
+ 17                -1  1     95104  models.common.BottleneckCSP             [256, 128, 1, False]          
+ 18                -1  1    147712  models.common.Conv                      [128, 128, 3, 2]              
+ 19          [-1, 14]  1         0  models.common.Concat                    [1]                           
+ 20                -1  1    313088  models.common.BottleneckCSP             [256, 256, 1, False]          
+ 21                -1  1    590336  models.common.Conv                      [256, 256, 3, 2]              
+ 22          [-1, 10]  1         0  models.common.Concat                    [1]                           
+ 23                -1  1   1248768  models.common.BottleneckCSP             [512, 512, 1, False]          
+ 24      [17, 20, 23]  1     16182  models.yolo.Detect                      [1, [[10, 13, 16, 30, 33, 23], [30, 61, 62, 45, 59, 119], [116, 90, 156, 198, 373, 326]], [128, 256, 512]]
+/opt/conda/lib/python3.8/site-packages/torch/nn/functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  /pytorch/c10/core/TensorImpl.h:1156.)
+  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
+Model Summary: 283 layers, 7255094 parameters, 7255094 gradients, 16.9 GFLOPS
+
+Optimizer groups: 62 .bias, 70 conv.weight, 59 other
+/opt/conda/lib/python3.8/site-packages/torch/nn/parallel/data_parallel.py:30: UserWarning: 
+    There is an imbalance between your GPUs. You may want to exclude GPU 1 which
+    has less than 75% of the memory or cores of GPU 0. You can do so by setting
+    the device_ids argument to DataParallel, or by setting the CUDA_VISIBLE_DEVICES
+    environment variable.
+  warnings.warn(imbalance_warn.format(device_ids[min_pos], device_ids[max_pos]))
+Scanning images:   0%|          | 0/607 [00:00<?, ?it/s]Scanning images:  13%|█▎        | 76/607 [00:00<00:00, 756.83it/s]Scanning images:  33%|███▎      | 199/607 [00:00<00:00, 854.23it/s]Scanning images:  53%|█████▎    | 321/607 [00:00<00:00, 937.27it/s]Scanning images:  73%|███████▎  | 445/607 [00:00<00:00, 1009.39it/s]Scanning images:  93%|█████████▎| 566/607 [00:00<00:00, 1062.18it/s]Scanning images: 100%|██████████| 607/607 [00:00<00:00, 1132.21it/s]
+0it [00:00, ?it/s]Scanning labels /home/datasets/labels/train.cache (607 found, 0 missing, 0 empty, 0 duplicate, for 607 images): 607it [00:00, 11506.93it/s]***cache_path /home/datasets/labels/train.cache
+
+Scanning images:   0%|          | 0/68 [00:00<?, ?it/s]Scanning images: 100%|██████████| 68/68 [00:00<00:00, 921.27it/s]
+0it [00:00, ?it/s]Scanning labels /home/datasets/labels/val.cache (68 found, 0 missing, 0 empty, 0 duplicate, for 68 images): 68it [00:00, 7020.97it/s]***cache_path /home/datasets/labels/val.cache
+
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+[W pthreadpool-cpp.cc:90] Warning: Leaking Caffe2 thread-pool after fork. (function pthreadpool)
+Image sizes 640 train, 640 test
+Using 8 dataloader workers
+Logging results to runs/train/model
+Starting training for 4 epochs...
+
+     Epoch   gpu_mem       box       obj       cls     total   targets  img_size
+  0%|          | 0/38 [00:00<?, ?it/s]  0%|          | 0/38 [00:07<?, ?it/s]
+
+Analyzing anchors... anchors/target = 4.48, Best Possible Recall (BPR) = 1.0000
+Traceback (most recent call last):
+  File "train.py", line 511, in <module>
+    train(hyp, opt, device, tb_writer, wandb)
+  File "train.py", line 291, in train
+    pred = model(imgs)  # forward
+  File "/opt/conda/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/opt/conda/lib/python3.8/site-packages/torch/nn/parallel/data_parallel.py", line 158, in forward
+    inputs, kwargs = self.scatter(inputs, kwargs, self.device_ids)
+  File "/opt/conda/lib/python3.8/site-packages/torch/nn/parallel/data_parallel.py", line 175, in scatter
+    return scatter_kwargs(inputs, kwargs, device_ids, dim=self.dim)
+  File "/opt/conda/lib/python3.8/site-packages/torch/nn/parallel/scatter_gather.py", line 44, in scatter_kwargs
+    inputs = scatter(inputs, target_gpus, dim) if inputs else []
+  File "/opt/conda/lib/python3.8/site-packages/torch/nn/parallel/scatter_gather.py", line 36, in scatter
+    res = scatter_map(inputs)
+  File "/opt/conda/lib/python3.8/site-packages/torch/nn/parallel/scatter_gather.py", line 23, in scatter_map
+    return list(zip(*map(scatter_map, obj)))
+  File "/opt/conda/lib/python3.8/site-packages/torch/nn/parallel/scatter_gather.py", line 19, in scatter_map
+    return Scatter.apply(target_gpus, None, dim, obj)
+  File "/opt/conda/lib/python3.8/site-packages/torch/nn/parallel/_functions.py", line 96, in forward
+    outputs = comm.scatter(input, target_gpus, chunk_sizes, ctx.dim, streams)
+  File "/opt/conda/lib/python3.8/site-packages/torch/nn/parallel/comm.py", line 189, in scatter
+    return tuple(torch._C._scatter(tensor, devices, chunk_sizes, dim, streams))
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+[2021-09-13 02:08:05,733] INFO in yolov5backend: Save training log into folder ==> /storage/qct/613eb256de29902c7038f00e
+123456

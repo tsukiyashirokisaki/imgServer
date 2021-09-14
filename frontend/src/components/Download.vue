@@ -19,7 +19,7 @@ export default {
         const link = document.createElement('a')
         link.href = URL.createObjectURL(blob)
         link.download = label
-        link.click()
+        // link.click()
         URL.revokeObjectURL(link.href)
         
       })
