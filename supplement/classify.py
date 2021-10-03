@@ -50,7 +50,7 @@ with open(label_path) as f:
 while "" in label:
     label.remove("")
 label = np.array(label).astype("int") - 1
-imgNames = np.array(os.listdir(img_path))
+imgNames = np.array(os.listdir(sorted(img_path)))
 # label = label
 # imgNames = imgNames
 imgTrain,imgVal,labelTrain,labelVal = train_test_split(imgNames,label,test_size=VAL_FRAC)

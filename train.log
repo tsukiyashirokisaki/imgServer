@@ -103,4 +103,3 @@ RuntimeError: CUDA error: out of memory
 CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
 For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
 [2021-09-13 02:08:05,733] INFO in yolov5backend: Save training log into folder ==> /storage/qct/613eb256de29902c7038f00e
-123456
