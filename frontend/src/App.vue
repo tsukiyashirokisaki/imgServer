@@ -4,6 +4,7 @@
     <ViewImg/>
     <Download/>
     <WebSocket/>
+    <Markdown/>
   </div>
 </template>
 <script>
@@ -11,6 +12,9 @@ import ViewImg from './components/ViewImg.vue'
 import UploadImg from './components/UploadImg.vue'
 import Download from './components/Download.vue'
 import WebSocket from './components/WebSocket.vue'
+import Markdown from './components/Markdown.vue'
+import 'github-markdown-css';
+
 
 export default {
   name: 'App',
@@ -18,7 +22,8 @@ export default {
     UploadImg,
     ViewImg,
     Download,
-    WebSocket
+    WebSocket,
+    Markdown
   },
   
 
@@ -34,4 +39,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>
