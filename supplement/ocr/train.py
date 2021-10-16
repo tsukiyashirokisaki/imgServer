@@ -5,11 +5,9 @@ import string
 import glob
 import math
 import os
-
 import tqdm
 import tensorflow as tf
 import sklearn.model_selection
-
 import keras_ocr
 import cv2
 import pandas as pd
@@ -36,9 +34,9 @@ detector_epoch = opt.detector_epoch
 detector_learning_rate = opt.detector_learning_rate
 recognizer_learning_rate = opt.recognizer_learning_rate
 recognizer_alphabet = ''.join(sorted(set(alphabet.lower())))
-label_dir = "label/"
-image_dir = "image/"
-output_dir = "output/"
+label_dir = "data/labels/"
+image_dir = "data/images/"
+output_dir = "data/output/"
 if not os.path.isdir(output_dir):
     os.makedirs(output_dir)
 def get_train_val_test_split(arr):
