@@ -30,7 +30,7 @@ Every label under data/labels/ correspond to the image file under data/images/ o
 
 001.jpg
 
-<img src="..\assets\000.png" width=30%>
+<img src="https://github.com/tsukiyashirokisaki/imgServer/blob/main/frontend/src/assets/000.png?raw=true" width=30%>
 
 001.csv
 
@@ -44,7 +44,7 @@ Every label under data/labels/ correspond to the image file under data/images/ o
 2,w,324,191,382,207,372,246,315,231
 ```
 
-The first column is group index, you can see that the 3 alphabets "rit" are close to each other in the above image, so all of them have group index 0. The group index starts from 0. The second column is the character. From the third column to the last column, they are the coordinates of the four corners corresponding to that character in clockwise order starting from the top left, $(x_1,y_1,x_2,y_2,y_3,y_3,x_4,y_4)$, where $0\leq x_i\leq w$ and $0\leq y_i\leq h$. h and w are the height and width of that image, and (x=0,y=0) is located at the upper left corner of the image.
+The first column is group index, you can see that the 3 alphabets "rit" are close to each other in the above image, so all of them have group index 0. The group index starts from 0. The second column is the character. From the third column to the last column, they are the coordinates of the four corners corresponding to that character in clockwise order starting from the top left, x1,y1,x2,y2,y3,y3,x4,y4, where 0≤xi≤w and 0≤yi≤h for 1≤i≤4. h and w are the height and width of that image, and (x=0,y=0) is located at the upper left corner of the image.
 
 The illustration of the coordinates of the four corners of character c. Note that the shape of the bounding coordinates are not restricted to rectangular.
 

@@ -11,7 +11,7 @@ export default {
         };
     },
     mounted() {
-        this.htmlMD = require('./classify_doc.md').default
+        this.htmlMD = require('./keras_ocr_doc.md').default
     },
 };
 </script>

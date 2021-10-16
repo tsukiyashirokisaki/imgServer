@@ -13,6 +13,7 @@
     "github-markdown-css": "^4.0.0",
     "html-loader": "^2.1.2",
     "markdown-loader": "^6.0.0",
+    "postcss-selector-parser": "^6.0.6",
     "socket.io-client": "^4.2.0",
     "vue": "^2.6.11",
     "vue-socket.io": "^3.0.10",
