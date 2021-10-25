@@ -89,4 +89,3 @@ The initial learning rate used to train the recognizer. It controls the step-siz
 
 The initial learning rate used to train the detector. It controls the step-size in updating the weights. One suggested initial learning rate is 1e-5.
 
-### 
